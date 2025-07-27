@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../createContext";
 import { useSelector, useDispatch } from "react-redux";
-import { clearCart } from "../redux/Slices/shopslice";   
+import { clearCart } from "../redux/Slices/shopslice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -11,36 +11,37 @@ const Header = () => {
   const cartItems = useSelector((state) => state.shop.cartItems);
 
   const totalCartPrice = cartItems.reduce(
-    (total, item) => total + (parseFloat(item.price) || 0) * (item.quantity || 0),
+    (total, item) =>
+      total + (parseFloat(item.price) || 0) * (item.quantity || 0),
     0
   );
 
   const handleLogout = () => {
     logout();
-    dispatch(clearCart());      
+    dispatch(clearCart());
     navigate("/");
   };
 
   return (
     <header className="bg-cyan-950 shadow-md py-5 px-4 flex justify-between items-center w-full">
-      <div className="text-2xl font-bold text-blue-400">
+      <div className="text-2xl font-bold text-blue-400 cursor-pointer">
         <Link to="/">MyStore</Link>
       </div>
 
       <div className="space-x-4 flex">
         <Link to="/">
-          <button className="bg-blue-400 text-white px-4 py-2 rounded-xl hover:bg-blue-500">
+          <button className="bg-blue-400 text-white px-4 py-2 rounded-xl hover:bg-blue-500 cursor-pointer">
             Products
           </button>
         </Link>
 
         <Link to="/cart">
-          <button className="bg-blue-400 text-white px-4 py-2 rounded-xl hover:bg-blue-500">
+          <button className="bg-blue-400 text-white px-4 py-2 rounded-xl hover:bg-blue-500 cursor-pointer">
             Cart&nbsp;<span>({cartItems.length})</span>
           </button>
         </Link>
 
-        <button className="bg-blue-400 text-white px-4 py-2 rounded-xl hover:bg-blue-500">
+        <button className="bg-blue-400 text-white px-4 py-2 rounded-xl hover:bg-blue-500 cursor-pointer">
           Total:&nbsp;
           <span className="text-gray-900 font-medium">
             ${totalCartPrice.toFixed(2)}
@@ -50,7 +51,7 @@ const Header = () => {
 
       <button
         onClick={handleLogout}
-        className="bg-blue-400 text-white px-4 py-2 rounded-xl hover:bg-blue-500"
+        className="bg-blue-400 text-white px-4 py-2 rounded-xl hover:bg-blue-500 cursor-pointer"
       >
         Logout
       </button>

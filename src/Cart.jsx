@@ -1,11 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import {
-  updateQuantity,
-  removeFromCart,
-} from "./redux/Slices/shopslice";
+import { updateQuantity, removeFromCart } from "./redux/Slices/shopslice";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Cart = () => {
   document.title = "Cart";
@@ -33,10 +31,19 @@ const Cart = () => {
           <p className="text-center text-gray-300">Your cart is empty.</p>
         ) : (
           <div className="grid grid-cols-4 gap-6">
-            {cartItems.map((item,index) => (
-              <div
+            {cartItems.map((item, index) => (
+              <motion.div
                 key={`${item.id}-${index}`}
                 className="card border p-4 rounded-lg shadow bg-blue-950"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.4,
+                  ease: "easeOut",
+                  delay: index * 0.1,
+                }}
               >
                 <img
                   src={item.thumbnail}
@@ -49,31 +56,35 @@ const Cart = () => {
 
                 <div className="flex gap-2">
                   <button
-                    onClick={() => dispatch(updateQuantity({ id: item.id, change: 1 }))}
-                    className="bg-green-400 text-white px-3 py-1 rounded hover:bg-green-500"
+                    onClick={() =>
+                      dispatch(updateQuantity({ id: item.id, change: 1 }))
+                    }
+                    className="bg-green-400 text-white px-3 py-1 rounded hover:bg-green-500 cursor-pointer"
                   >
                     +
                   </button>
                   <button
-                    onClick={() => dispatch(updateQuantity({ id: item.id, change: -1 }))}
-                    className="bg-green-400 text-white px-3 py-1 rounded hover:bg-green-500"
+                    onClick={() =>
+                      dispatch(updateQuantity({ id: item.id, change: -1 }))
+                    }
+                    className="bg-green-400 text-white px-3 py-1 rounded hover:bg-green-500 cursor-pointer"
                   >
                     -
                   </button>
                   <button
                     onClick={() => dispatch(removeFromCart(item.id))}
-                    className="bg-green-400 text-white px-3 py-1 rounded hover:bg-green-500"
+                    className="bg-green-400 text-white px-3 py-1 rounded hover:bg-green-500 cursor-pointer"
                   >
                     Remove
                   </button>
                   <button
                     onClick={() => handleBuyNow(item)}
-                    className="bg-green-400 text-white px-3 py-1 rounded hover:bg-green-500"
+                    className="bg-green-400 text-white px-3 py-1 rounded hover:bg-green-500 cursor-pointer"
                   >
                     Buy Now
                   </button>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         )}
@@ -84,7 +95,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
-
-
-
